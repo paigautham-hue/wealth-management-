@@ -410,6 +410,190 @@ export const appRouter = router({
   }),
 
   // ============================================================================
+  // ADVANCED ANALYTICS
+  // ============================================================================
+  advancedAnalytics: router({
+    attribution: protectedProcedure
+      .input(z.object({
+        portfolioReturns: z.array(z.number()),
+        benchmarkReturns: z.array(z.number()),
+        riskFreeRate: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { calculateAttributionMetrics } = await import("./advancedAnalytics");
+        return await calculateAttributionMetrics(input.portfolioReturns, input.benchmarkReturns, input.riskFreeRate);
+      }),
+    
+    monteCarlo: protectedProcedure
+      .input(z.object({
+        currentValue: z.number(),
+        expectedReturn: z.number(),
+        volatility: z.number(),
+        timeHorizon: z.number(),
+        simulations: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { runMonteCarloSimulation } = await import("./advancedAnalytics");
+        return await runMonteCarloSimulation(
+          input.currentValue,
+          input.expectedReturn,
+          input.volatility,
+          input.timeHorizon,
+          input.simulations
+        );
+      }),
+    
+    stressTest: protectedProcedure
+      .input(z.object({
+        currentValue: z.number(),
+        allocation: z.object({
+          stocks: z.number(),
+          bonds: z.number(),
+          gold: z.number(),
+          cash: z.number(),
+          alternatives: z.number(),
+        }),
+      }))
+      .query(async ({ input }) => {
+        const { runStressTests } = await import("./advancedAnalytics");
+        return await runStressTests(input.currentValue, input.allocation);
+      }),
+  }),
+
+  // ============================================================================
+  // TAX OPTIMIZATION
+  // ============================================================================
+  tax: router({
+    scanOpportunities: protectedProcedure
+      .input(z.object({
+        assets: z.array(z.object({
+          id: z.number(),
+          ticker: z.string(),
+          name: z.string(),
+          purchasePrice: z.number(),
+          currentPrice: z.number(),
+          quantity: z.number(),
+          purchaseDate: z.string(),
+        })),
+        taxRate: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { scanTaxLossHarvestingOpportunities } = await import("./taxOptimization");
+        return await scanTaxLossHarvestingOpportunities(input.assets, input.taxRate);
+      }),
+    
+    calculateImpact: protectedProcedure
+      .input(z.object({
+        purchasePrice: z.number(),
+        sellPrice: z.number(),
+        quantity: z.number(),
+        holdingPeriod: z.number(),
+        taxRate: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { calculateTaxImpact } = await import("./taxOptimization");
+        return await calculateTaxImpact(
+          input.purchasePrice,
+          input.sellPrice,
+          input.quantity,
+          input.holdingPeriod,
+          input.taxRate
+        );
+      }),
+    
+    yearEndReport: protectedProcedure
+      .input(z.object({
+        assets: z.array(z.object({
+          id: z.number(),
+          ticker: z.string(),
+          name: z.string(),
+          purchasePrice: z.number(),
+          currentPrice: z.number(),
+          quantity: z.number(),
+          purchaseDate: z.string(),
+        })),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { generateYearEndTaxReport } = await import("./taxOptimization");
+        return await generateYearEndTaxReport(ctx.user.id, input.assets);
+      }),
+  }),
+
+  // ============================================================================
+  // LIABILITIES & TRUE NET WORTH
+  // ============================================================================
+  liabilities: router({
+    add: protectedProcedure
+      .input(z.object({
+        type: z.enum(["mortgage", "personal_loan", "auto_loan", "credit_card", "student_loan", "business_loan", "other"]),
+        name: z.string(),
+        lender: z.string().optional(),
+        principalAmount: z.number(),
+        currentBalance: z.number(),
+        interestRate: z.number(), // Basis points
+        monthlyPayment: z.number().optional(),
+        startDate: z.string().optional(),
+        maturityDate: z.string().optional(),
+        collateral: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { addLiability } = await import("./liabilities");
+        return await addLiability(ctx.user.id, input as any);
+      }),
+    
+    getAll: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getLiabilities } = await import("./liabilities");
+        return await getLiabilities(ctx.user.id);
+      }),
+    
+    update: protectedProcedure
+      .input(z.object({
+        liabilityId: z.number(),
+        updates: z.object({
+          currentBalance: z.number().optional(),
+          monthlyPayment: z.number().optional(),
+          notes: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { updateLiability } = await import("./liabilities");
+        return await updateLiability(ctx.user.id, input.liabilityId, input.updates);
+      }),
+    
+    delete: protectedProcedure
+      .input(z.object({
+        liabilityId: z.number(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { deleteLiability } = await import("./liabilities");
+        return await deleteLiability(ctx.user.id, input.liabilityId);
+      }),
+    
+    getTrueNetWorth: protectedProcedure
+      .input(z.object({
+        totalAssets: z.number(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getTrueNetWorth } = await import("./liabilities");
+        return await getTrueNetWorth(ctx.user.id, input.totalAssets);
+      }),
+    
+    getPayoffProjection: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getDebtPayoffProjection } = await import("./liabilities");
+        return await getDebtPayoffProjection(ctx.user.id);
+      }),
+    
+    getBreakdown: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getLiabilitiesBreakdown } = await import("./liabilities");
+        return await getLiabilitiesBreakdown(ctx.user.id);
+      }),
+  }),
+
+  // ============================================================================
   // FAMILY OFFICE
   // ============================================================================
   family: router({

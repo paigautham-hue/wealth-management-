@@ -273,3 +273,64 @@
 - [ ] Currency display toggle (INR/USD/EUR)
 - [ ] Widget library
 - [ ] User preferences storage
+
+## Phase 21: True Net Worth Calculation
+- [x] Liabilities tracking (mortgages, loans, credit cards)
+- [x] Debt-to-equity ratio calculation
+- [x] Monthly debt service tracking
+- [x] Debt payoff projections
+- [x] Liabilities breakdown by type
+- [x] True net worth calculation (assets - liabilities)
+
+## Phase 22: Tax Optimization Suite
+- [x] Tax loss harvesting scanner
+- [x] AI-powered replacement asset suggestions
+- [x] Wash sale rule compliance
+- [x] Capital gains liability calculation
+- [x] Tax impact calculator for transactions
+- [x] Year-end tax planning report
+- [x] Priority-based opportunity ranking
+
+## Phase 23: Alternative Investments
+- [x] Private equity/VC tracking
+- [x] Real estate property management
+- [x] Cryptocurrency portfolio tracking
+- [x] Art and collectibles valuation
+- [x] Commodities tracking
+- [x] Liquidity status management
+
+## Phase 24: Fixed Income Advanced
+- [x] Bond ladder visualization
+- [x] Duration and convexity metrics
+- [x] Yield to maturity calculations
+- [x] Credit rating tracking
+- [x] Interest rate risk analysis
+
+## Phase 25: Insurance as Asset Class
+- [x] Life insurance tracking with cash value
+- [x] Health insurance coverage monitoring
+- [x] Property insurance management
+- [x] Beneficiary tracking
+- [x] Premium payment scheduling
+
+## Phase 26: Attribution Analysis
+- [x] Sharpe ratio calculation
+- [x] Sortino ratio calculation
+- [x] Alpha and Beta metrics
+- [x] Information ratio
+- [x] Max drawdown analysis
+- [x] Calmar ratio
+- [x] Factor attribution analysis
+
+## Phase 27: Scenario Analysis & Stress Testing
+- [x] Monte Carlo simulation (10,000 runs)
+- [x] Confidence interval calculations (P5, P25, P50, P75, P95)
+- [x] Historical stress tests (2008, COVID, Dot-com)
+- [x] Custom scenario modeling
+- [x] Recovery time estimation
+
+## Phase 28: Personalization
+- [x] Custom dashboard preferences (schema ready)
+- [x] Personalized asset allocation recommendations
+- [x] Custom reporting preferences
+- [x] Theme and layout customization

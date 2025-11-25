@@ -43,6 +43,105 @@ export type FamilyGroup = typeof familyGroups.$inferSelect;
 export type InsertFamilyGroup = typeof familyGroups.$inferInsert;
 
 // ============================================================================
+// LIABILITIES (TRUE NET WORTH)
+// ============================================================================
+
+export const liabilities = mysqlTable("liabilities", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", ["mortgage", "personal_loan", "auto_loan", "credit_card", "student_loan", "business_loan", "other"]).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  lender: varchar("lender", { length: 255 }),
+  principalAmount: int("principalAmount").notNull(), // Original loan amount
+  currentBalance: int("currentBalance").notNull(), // Current outstanding balance
+  interestRate: int("interestRate").notNull(), // Annual interest rate (basis points, e.g., 850 = 8.5%)
+  monthlyPayment: int("monthlyPayment"), // Monthly payment amount
+  startDate: timestamp("startDate"),
+  maturityDate: timestamp("maturityDate"),
+  collateral: text("collateral"), // Description of collateral (for secured loans)
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Liability = typeof liabilities.$inferSelect;
+export type InsertLiability = typeof liabilities.$inferInsert;
+
+// ============================================================================
+// ALTERNATIVE INVESTMENTS
+// ============================================================================
+
+export const alternativeInvestments = mysqlTable("alternative_investments", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", ["private_equity", "venture_capital", "real_estate", "cryptocurrency", "art", "collectibles", "commodities", "hedge_fund", "other"]).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  investmentAmount: int("investmentAmount").notNull(),
+  currentValue: int("currentValue").notNull(),
+  acquisitionDate: timestamp("acquisitionDate"),
+  liquidityStatus: mysqlEnum("liquidityStatus", ["liquid", "semi_liquid", "illiquid"]).default("illiquid"),
+  expectedExitDate: timestamp("expectedExitDate"),
+  metadata: text("metadata"), // JSON for type-specific fields
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AlternativeInvestment = typeof alternativeInvestments.$inferSelect;
+export type InsertAlternativeInvestment = typeof alternativeInvestments.$inferInsert;
+
+// ============================================================================
+// INSURANCE POLICIES
+// ============================================================================
+
+export const insurancePolicies = mysqlTable("insurance_policies", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", ["life", "health", "property", "auto", "liability", "umbrella", "other"]).notNull(),
+  policyName: varchar("policyName", { length: 255 }).notNull(),
+  provider: varchar("provider", { length: 255 }),
+  policyNumber: varchar("policyNumber", { length: 255 }),
+  coverageAmount: int("coverageAmount").notNull(),
+  annualPremium: int("annualPremium").notNull(),
+  cashValue: int("cashValue"), // For life insurance
+  startDate: timestamp("startDate"),
+  expiryDate: timestamp("expiryDate"),
+  beneficiaries: text("beneficiaries"),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type InsurancePolicy = typeof insurancePolicies.$inferSelect;
+export type InsertInsurancePolicy = typeof insurancePolicies.$inferInsert;
+
+// ============================================================================
+// FIXED INCOME HOLDINGS
+// ============================================================================
+
+export const fixedIncomeHoldings = mysqlTable("fixed_income_holdings", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", ["government_bond", "corporate_bond", "municipal_bond", "treasury", "cd", "other"]).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  issuer: varchar("issuer", { length: 255 }),
+  faceValue: int("faceValue").notNull(),
+  purchasePrice: int("purchasePrice").notNull(),
+  currentValue: int("currentValue").notNull(),
+  couponRate: int("couponRate").notNull(), // Basis points
+  maturityDate: timestamp("maturityDate"),
+  purchaseDate: timestamp("purchaseDate"),
+  duration: int("duration"), // Modified duration in basis points
+  yieldToMaturity: int("yieldToMaturity"), // Basis points
+  rating: varchar("rating", { length: 10 }), // AAA, AA+, etc.
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type FixedIncomeHolding = typeof fixedIncomeHoldings.$inferSelect;
+export type InsertFixedIncomeHolding = typeof fixedIncomeHoldings.$inferInsert;
+
+// ============================================================================
 // USER PREFERENCES
 // ============================================================================
 
