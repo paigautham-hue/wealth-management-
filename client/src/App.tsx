@@ -18,6 +18,7 @@ import Oracle from "./pages/Oracle";
 import Documents from "./pages/Documents";
 import Analytics from "./pages/Analytics";
 import WealthAdvisor from "./pages/WealthAdvisor";
+import { PWAInstallBanner } from "./components/PWAInstallBanner";
 
 function Router() {
   return (
@@ -29,7 +30,8 @@ function Router() {
       <Route path="/risk-analytics" component={RiskAnalytics} />
       <Route path="/alternative-investments" component={AlternativeInvestments} />
       <Route path="/scenario-planner" component={ScenarioPlanner} />
-      <Route path="/portfolio" component={Portfolio} />      <Route path="/portfolio/add" component={AddAsset} />
+      <Route path="/portfolio" component={Portfolio} />
+      <Route path="/portfolio/add" component={AddAsset} />
       <Route path="/lrs" component={LRS} />
       <Route path="/oracle" component={Oracle} />
       <Route path="/documents" component={Documents} />
@@ -53,6 +55,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <PWAInstallBanner />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

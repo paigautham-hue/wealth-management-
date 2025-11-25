@@ -361,3 +361,16 @@
 - [x] Stress test scenarios displayEnhanced Family Office Dashboard
 - [ ] Consolidated metrics with new features
 - [ ] Member performance comparison
+
+## Phase 30: Progressive Web App (PWA)
+- [x] Create manifest.json with app metadata
+- [x] Add service worker for offline caching
+- [x] Implement cache strategies (network-first, cache-first)
+- [x] Add install prompt for "Add to Home Screen"
+- [x] Create app icons (192x192, 512x512)
+- [x] Add splash screens for iOS
+- [x] Implement push notification service
+- [x] Add notification permission request
+- [x] PWA install banner component
+- [x] Service worker registration hook
+- [x] Offline support for static assets
