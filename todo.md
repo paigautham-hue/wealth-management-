@@ -113,3 +113,33 @@
 - [ ] Database migrations
 - [ ] Final checkpoint creation
 - [ ] Production deployment
+
+## Phase 9: Real Market Data Integration
+- [x] Yahoo Finance API integration
+- [x] NSE/BSE stock data fetching
+- [x] US stock data fetching
+- [x] Real-time price updates
+- [x] Fundamental data (PE, PB, ROE, etc.)
+- [x] Historical performance data
+- [x] Market cap and volume data
+- [x] Replace mock data in Oracle
+
+## Phase 10: Document Extraction (Claude 3.5 Sonnet)
+- [x] Claude API integration
+- [x] PDF parsing for Zerodha statements
+- [x] PDF parsing for Groww statements
+- [x] PDF parsing for ICICI statements
+- [x] Transaction extraction logic
+- [x] Math checksum verification
+- [x] Review UI for extracted data
+- [x] Commit to portfolio workflow
+
+## Phase 11: Multi-Currency Support
+- [x] Forex API integration (Exchange Rate API)
+- [x] Real-time USD/INR conversion
+- [x] EUR/INR conversion
+- [x] GBP/INR conversion
+- [x] Currency alpha calculation
+- [x] Asset alpha calculation
+- [x] Multi-currency portfolio display
+- [x] Historical exchange rate tracking

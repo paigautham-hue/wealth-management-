@@ -250,33 +250,11 @@ export const appRouter = router({
           };
         }
         
-        // Mock stock data for demo (in production, fetch from real API)
-        const mockData: StockData = {
-          ticker: input.ticker,
-          price: 1500,
-          marketCap: 500000,
-          pe: 18,
-          pb: 3.5,
-          roe: 18,
-          roce: 22,
-          debtToEquity: 0.3,
-          revenueGrowth: 15,
-          eps: 80,
-          bookValue: 450,
-          ebit: 25000,
-          enterpriseValue: 550000,
-          capitalEmployed: 100000,
-          piotroskiScore: 7,
-          priceChange3M: 5,
-          priceChange6M: 12,
-          promoterHolding: 65,
-          sector: "Banking",
-          companyAge: 25,
-          tam: 5000000,
-          revenue: 100000,
-        };
+        // Fetch real stock data from Yahoo Finance
+        const { fetchStockData } = await import("./marketData");
+        const stockData = await fetchStockData(input.ticker, input.market);
         
-        const analysis = analyzeStock(mockData, input.market);
+        const analysis = analyzeStock(stockData, input.market);
         
         // Save to database
         await db.createStockAnalysis({
@@ -318,6 +296,110 @@ export const appRouter = router({
           risks: ["Market volatility", "Regulatory changes", "Competition pressure"],
           bearCase: "Despite positive indicators, investors should consider potential headwinds including market saturation, increased competition, and macroeconomic uncertainties that could impact growth projections.",
         };
+      }),
+  }),
+
+  // ============================================================================
+  // FOREX & CURRENCY CONVERSION
+  // ============================================================================
+  forex: router({
+    // Get current exchange rates
+    getRates: publicProcedure
+      .input(z.object({
+        baseCurrency: z.string().default("INR"),
+      }))
+      .query(async ({ input }) => {
+        const { fetchExchangeRates } = await import("./forex");
+        return await fetchExchangeRates(input.baseCurrency);
+      }),
+    
+    // Convert currency
+    convert: publicProcedure
+      .input(z.object({
+        amount: z.number(),
+        fromCurrency: z.string(),
+        toCurrency: z.string(),
+      }))
+      .query(async ({ input }) => {
+        const { convertCurrency } = await import("./forex");
+        const result = await convertCurrency(input.amount, input.fromCurrency, input.toCurrency);
+        return { amount: result, fromCurrency: input.fromCurrency, toCurrency: input.toCurrency };
+      }),
+    
+    // Calculate alpha breakdown
+    calculateAlpha: protectedProcedure
+      .input(z.object({
+        purchasePriceNative: z.number(),
+        currentPriceNative: z.number(),
+        purchaseExchangeRate: z.number(),
+        currentExchangeRate: z.number(),
+      }))
+      .query(({ input }) => {
+        const { calculateAlpha } = require("./forex");
+        return calculateAlpha(
+          input.purchasePriceNative,
+          input.currentPriceNative,
+          input.purchaseExchangeRate,
+          input.currentExchangeRate
+        );
+      }),
+  }),
+
+  // ============================================================================
+  // DOCUMENT EXTRACTION
+  // ============================================================================
+  documents: router({
+    // Extract transactions from PDF
+    extract: protectedProcedure
+      .input(z.object({
+        pdfUrl: z.string().url(),
+        broker: z.enum(["zerodha", "groww", "icici"]),
+      }))
+      .mutation(async ({ input }) => {
+        const { extractTransactionsFromPDF } = await import("./documentExtraction");
+        return await extractTransactionsFromPDF(input.pdfUrl, input.broker);
+      }),
+    
+    // Commit extracted transactions to portfolio
+    commitToPortfolio: protectedProcedure
+      .input(z.object({
+        transactions: z.array(z.object({
+          date: z.string(),
+          type: z.enum(["BUY", "SELL"]),
+          ticker: z.string(),
+          quantity: z.number(),
+          price: z.number(),
+          totalAmount: z.number(),
+          charges: z.number(),
+          netAmount: z.number(),
+        })),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Process each transaction and create assets
+        for (const txn of input.transactions) {
+          // Create new asset for each transaction (simplified approach)
+          const assetId = await db.createAsset({
+            assetName: txn.ticker,
+            ticker: txn.ticker,
+            assetType: "stock",
+            currentValueInr: txn.price,
+            currency: "INR",
+          });
+          
+          // Create asset ownership record
+          await db.createAssetOwnership({
+            ownerId: ctx.user.id,
+            assetId,
+            ownershipPercentage: 100,
+            purchaseDate: new Date(txn.date),
+            costBasisInr: txn.netAmount,
+            costBasisNativeCurrency: txn.netAmount,
+            nativeCurrency: "INR",
+            exchangeRateAtPurchase: 1,
+          });
+        }
+        
+        return { success: true, count: input.transactions.length };
       }),
   }),
 

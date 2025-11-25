@@ -9,6 +9,7 @@ import Portfolio from "./pages/Portfolio";
 import AddAsset from "./pages/AddAsset";
 import LRS from "./pages/LRS";
 import Oracle from "./pages/Oracle";
+import Documents from "./pages/Documents";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/portfolio/add" component={AddAsset} />
       <Route path="/lrs" component={LRS} />
       <Route path="/oracle" component={Oracle} />
+      <Route path="/documents" component={Documents} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
