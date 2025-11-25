@@ -2,6 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, Loader2 } from "lucide-react";
+import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { formatINR, formatPercentage } from "@/lib/currency";
@@ -83,6 +84,9 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <Link href="/portfolio">
               <Button variant="ghost">Portfolio</Button>
+            </Link>
+            <Link href="/oracle">
+              <Button variant="ghost">Oracle</Button>
             </Link>
             <Link href="/lrs">
               <Button variant="ghost">LRS</Button>
@@ -195,6 +199,9 @@ export default function Home() {
           </motion.div>
         </div>
       </main>
+      
+      {/* Portfolio Chatbot */}
+      {isAuthenticated && <PortfolioChatbot />}
     </div>
   );
 }

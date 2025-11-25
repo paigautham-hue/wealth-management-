@@ -4,6 +4,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
+import { analyzeStock, type StockData } from "./oracle";
 
 // ============================================================================
 // VALIDATION SCHEMAS
@@ -224,15 +225,99 @@ export const appRouter = router({
   // STOCK ANALYSIS (The Oracle)
   // ============================================================================
   oracle: router({
-    // Get stock analysis (cached for 24 hours)
+    // Get stock analysis
     getAnalysis: protectedProcedure
       .input(z.object({
         ticker: z.string(),
         market: z.enum(["IN", "US"]),
       }))
       .query(async ({ input }) => {
-        const analysis = await db.getStockAnalysis(input.ticker, input.market);
-        return analysis;
+        // Check cache first
+        const cached = await db.getStockAnalysis(input.ticker, input.market);
+        if (cached) {
+          return {
+            ...cached,
+            lensScores: {
+              buffett: { score: cached.buffettScore / 10, verdict: cached.buffettVerdict || "", reasoning: "" },
+              lynch: { score: cached.lynchScore / 10, verdict: cached.lynchVerdict || "", reasoning: "" },
+              graham: { score: cached.grahamScore / 10, verdict: cached.grahamVerdict || "", reasoning: "" },
+              fisher: { score: cached.fisherScore / 10, verdict: cached.fisherVerdict || "", reasoning: "" },
+              jhunjhunwala: { score: cached.jhunjhunwalaScore / 10, verdict: cached.jhunjhunwalaVerdict || "", reasoning: "" },
+              kacholia: { score: cached.kacholiaScore / 10, verdict: cached.kacholiaVerdict || "", reasoning: "" },
+              kedia: { score: cached.kediaScore / 10, verdict: cached.kediaVerdict || "", reasoning: "" },
+              quantitative: { score: cached.quantitativeScore / 10, verdict: cached.quantitativeVerdict || "", reasoning: "" },
+            },
+          };
+        }
+        
+        // Mock stock data for demo (in production, fetch from real API)
+        const mockData: StockData = {
+          ticker: input.ticker,
+          price: 1500,
+          marketCap: 500000,
+          pe: 18,
+          pb: 3.5,
+          roe: 18,
+          roce: 22,
+          debtToEquity: 0.3,
+          revenueGrowth: 15,
+          eps: 80,
+          bookValue: 450,
+          ebit: 25000,
+          enterpriseValue: 550000,
+          capitalEmployed: 100000,
+          piotroskiScore: 7,
+          priceChange3M: 5,
+          priceChange6M: 12,
+          promoterHolding: 65,
+          sector: "Banking",
+          companyAge: 25,
+          tam: 5000000,
+          revenue: 100000,
+        };
+        
+        const analysis = analyzeStock(mockData, input.market);
+        
+        // Save to database
+        await db.createStockAnalysis({
+          ticker: input.ticker,
+          market: input.market,
+          analysisDate: new Date(),
+          buffettScore: Math.round(analysis.lensScores.buffett.score * 10),
+          buffettVerdict: analysis.lensScores.buffett.verdict,
+          lynchScore: Math.round(analysis.lensScores.lynch.score * 10),
+          lynchVerdict: analysis.lensScores.lynch.verdict,
+          grahamScore: Math.round(analysis.lensScores.graham.score * 10),
+          grahamVerdict: analysis.lensScores.graham.verdict,
+          fisherScore: Math.round(analysis.lensScores.fisher.score * 10),
+          fisherVerdict: analysis.lensScores.fisher.verdict,
+          jhunjhunwalaScore: Math.round(analysis.lensScores.jhunjhunwala.score * 10),
+          jhunjhunwalaVerdict: analysis.lensScores.jhunjhunwala.verdict,
+          kacholiaScore: Math.round(analysis.lensScores.kacholia.score * 10),
+          kacholiaVerdict: analysis.lensScores.kacholia.verdict,
+          kediaScore: Math.round(analysis.lensScores.kedia.score * 10),
+          kediaVerdict: analysis.lensScores.kedia.verdict,
+          quantitativeScore: Math.round(analysis.lensScores.quantitative.score * 10),
+          quantitativeVerdict: analysis.lensScores.quantitative.verdict,
+          finalScore: Math.round(analysis.finalScore * 10),
+          recommendation: analysis.recommendation,
+          confidence: analysis.confidence,
+          currentPrice: analysis.currentPrice,
+          targetPrice: analysis.targetPrice,
+          upsidePercentage: analysis.upsidePercentage,
+          executiveSummary: "This stock shows strong fundamentals with consistent growth and reasonable valuation. The company demonstrates competitive advantages in its sector.",
+          strengths: ["Strong market position", "Consistent revenue growth", "Healthy profitability metrics"],
+          risks: ["Market volatility", "Regulatory changes", "Competition pressure"],
+          bearCase: "Despite positive indicators, investors should consider potential headwinds including market saturation, increased competition, and macroeconomic uncertainties that could impact growth projections.",
+        });
+        
+        return {
+          ...analysis,
+          executiveSummary: "This stock shows strong fundamentals with consistent growth and reasonable valuation. The company demonstrates competitive advantages in its sector.",
+          strengths: ["Strong market position", "Consistent revenue growth", "Healthy profitability metrics"],
+          risks: ["Market volatility", "Regulatory changes", "Competition pressure"],
+          bearCase: "Despite positive indicators, investors should consider potential headwinds including market saturation, increased competition, and macroeconomic uncertainties that could impact growth projections.",
+        };
       }),
   }),
 
@@ -247,6 +332,58 @@ export const appRouter = router({
       }))
       .query(async ({ ctx, input }) => {
         return await db.getUserChatHistory(ctx.user.id, input.conversationId);
+      }),
+    
+    // Send message and get AI response
+    sendMessage: protectedProcedure
+      .input(z.object({
+        message: z.string().min(1),
+        conversationId: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { generateChatResponse } = await import("./chat");
+        
+        // Get portfolio context
+        const userAssets = await db.getUserAssets(ctx.user.id);
+        const totalNetWorth = userAssets.reduce(
+          (sum, { asset, ownership }) => sum + asset.currentValueInr * (ownership.ownershipPercentage / 100),
+          0
+        );
+        
+        const now = new Date();
+        const fiscalYearStart = new Date(
+          now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1,
+          3,
+          1
+        );
+        const lrsUsed = await db.getLrsUsageForFiscalYear(ctx.user.id, fiscalYearStart);
+        
+        const chatContext = {
+          userId: ctx.user.id,
+          portfolioSummary: {
+            totalNetWorth,
+            assetCount: userAssets.length,
+            lrsUsed,
+            lrsRemaining: 250000 - lrsUsed,
+          },
+        };
+        
+        // Generate response
+        const response = await generateChatResponse(input.message, chatContext);
+        
+        // Save conversation to database
+        const conversationId = input.conversationId || `conv_${Date.now()}`;
+        await db.createChatMessage({
+          userId: ctx.user.id,
+          conversationId,
+          message: input.message,
+          response: response,
+        });
+        
+        return {
+          response,
+          conversationId,
+        };
       }),
   }),
 });

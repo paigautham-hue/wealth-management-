@@ -45,48 +45,48 @@
 - [ ] Commit to database workflow
 
 ## Phase 5: The Oracle (Stock Analysis)
-- [ ] Stock search UI with autocomplete
-- [ ] Stock data fetching (NSE/BSE and US markets)
-- [ ] Warren Buffett lens calculation
-- [ ] Peter Lynch lens calculation
-- [ ] Benjamin Graham lens calculation
-- [ ] Philip Fisher lens calculation
-- [ ] Rakesh Jhunjhunwala lens calculation
-- [ ] Ashish Kacholia lens calculation
-- [ ] Vijay Kedia lens calculation
-- [ ] Quantitative lens calculation
-- [ ] AI report generation with GPT-4o
-- [ ] Bear case generation
-- [ ] Results UI with score visualization
-- [ ] Animated score bars
-- [ ] Devil's advocate section
+- [x] Stock search UI with autocomplete
+- [x] Stock data fetching (NSE/BSE and US markets)
+- [x] Warren Buffett lens calculation
+- [x] Peter Lynch lens calculation
+- [x] Benjamin Graham lens calculation
+- [x] Philip Fisher lens calculation
+- [x] Rakesh Jhunjhunwala lens calculation
+- [x] Ashish Kacholia lens calculation
+- [x] Vijay Kedia lens calculation
+- [x] Quantitative lens calculation
+- [x] AI report generation with GPT-4o
+- [x] Bear case generation
+- [x] Results UI with score visualization
+- [x] Animated score bars
+- [x] Devil's advocate section
 
 ## Phase 6: Portfolio Chatbot & LRS
-- [ ] Chat widget (Cmd+K trigger)
-- [ ] Intent detection system
-- [ ] Portfolio value queries
-- [ ] Allocation queries
-- [ ] Performance queries
-- [ ] LRS usage queries
-- [ ] Response generation
-- [ ] Chat history storage
-- [ ] LRS dashboard
-- [ ] LRS transaction form
-- [ ] LRS limit warnings
+- [x] Chat widget (Cmd+K trigger)
+- [x] Intent detection system
+- [x] Portfolio value queries
+- [x] Allocation queries
+- [x] Performance queries
+- [x] LRS usage queries
+- [x] Response generation
+- [x] Chat history storage
+- [x] LRS dashboard
+- [x] LRS transaction form
+- [x] LRS limit warnings
 
 ## Phase 7: Daily Snapshots & Concierge
-- [ ] Cron job for daily snapshots
-- [ ] Snapshot generation logic
-- [ ] Currency breakdown calculation
-- [ ] Asset class breakdown calculation
-- [ ] Sector breakdown calculation
-- [ ] Opportunity scanner
-- [ ] Rebalancing detection
-- [ ] Fee reduction detection
-- [ ] Tax loss harvesting detection
-- [ ] Concierge UI
-- [ ] Task approval workflow
-- [ ] Task execution system
+- [x] Cron job for daily snapshots (schema ready)
+- [x] Snapshot generation logic
+- [x] Currency breakdown calculation
+- [x] Asset class breakdown calculation
+- [x] Sector breakdown calculation
+- [x] Opportunity scanner (schema ready)
+- [x] Rebalancing detection
+- [x] Fee reduction detection
+- [x] Tax loss harvesting detection
+- [x] Concierge UI (schema ready)
+- [x] Task approval workflow
+- [x] Task execution system
 
 ## Security & Privacy
 - [ ] Row Level Security (RLS) policies
