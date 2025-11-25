@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, Loader2 } from "lucide-react";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
+import { MobileNav } from "@/components/MobileNav";
+import { PullToRefresh } from "@/components/PullToRefresh";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { formatINR, formatPercentage } from "@/lib/currency";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { toast } from "sonner";
 
 /**
  * AETHER V5 - Home Dashboard
@@ -19,6 +22,18 @@ export default function Home() {
   const { data: dashboard, isLoading } = trpc.portfolio.getDashboard.useQuery(undefined, {
     enabled: isAuthenticated,
   });
+  const utils = trpc.useUtils();
+
+  const handleRefresh = async () => {
+    try {
+      toast.info('Refreshing portfolio...');
+      await utils.portfolio.getDashboard.invalidate();
+      toast.success('Portfolio updated!');
+    } catch (error) {
+      toast.error('Failed to refresh portfolio');
+      console.error('[Pull-to-Refresh] Error:', error);
+    }
+  };
 
   // Show login for unauthenticated users
   if (!authLoading && !isAuthenticated) {
@@ -76,12 +91,16 @@ export default function Home() {
   const isPositive = ytdPercentage > 0;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-foreground">AETHER V5</h2>
-          <div className="flex items-center gap-4">
+    <PullToRefresh onRefresh={handleRefresh}>
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="border-b border-border bg-card">
+          <div className="container py-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <MobileNav />
+              <h2 className="text-xl font-semibold text-foreground">AETHER V5</h2>
+            </div>
+            <div className="hidden md:flex items-center gap-4">
             <Link href="/portfolio">
               <Button variant="ghost">Portfolio</Button>
             </Link>
@@ -214,6 +233,7 @@ export default function Home() {
       
       {/* Portfolio Chatbot */}
       {isAuthenticated && <PortfolioChatbot />}
-    </div>
+      </div>
+    </PullToRefresh>
   );
 }

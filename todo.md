@@ -374,3 +374,15 @@
 - [x] PWA install banner component
 - [x] Service worker registration hook
 - [x] Offline support for static assets
+
+## Phase 31: Mobile Optimization
+- [x] Create hamburger menu component
+- [x] Add mobile navigation drawer
+- [x] Implement menu open/close animations
+- [x] Add backdrop overlay for menu
+- [x] Responsive navigation (show hamburger on mobile, horizontal on desktop)
+- [x] Pull-to-refresh component
+- [x] Touch gesture detection
+- [x] Loading spinner during refresh
+- [x] Sync portfolio data on pull-to-refresh
+- [x] Toast notifications for refresh status
