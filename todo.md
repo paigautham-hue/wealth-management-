@@ -347,19 +347,17 @@
 - [ ] Alternative Investments Manager page
 - [ ] Add alternative investment form
 - [ ] Liquidity status tracking
-- [ ] Valuation history charts
-- [ ] Insurance Tracker page
-- [ ] Add insurance policy form
-- [ ] Coverage summary dashboard
-- [ ] Premium payment reminders
+- [ ] Valuation hist- [x] Alternative Investments Manager page
+- [x] Add alternative investment form
+- [x] Liquidity status tracking
+- [x] Valuation history charts
 - [x] Risk Analytics Dashboard page
 - [x] Attribution metrics visualization (Sharpe, Sortino, Alpha, Beta)
 - [x] Max drawdown chart
 - [x] Factor attribution breakdown
-- [ ] Scenario Planner page
-- [ ] Monte Carlo simulation results
-- [ ] Confidence interval visualization
-- [ ] Stress test scenarios display
-- [ ] Enhanced Family Office Dashboard
+- [x] Scenario Planner page
+- [x] Monte Carlo simulation results
+- [x] Confidence interval visualization
+- [x] Stress test scenarios displayEnhanced Family Office Dashboard
 - [ ] Consolidated metrics with new features
 - [ ] Member performance comparison
