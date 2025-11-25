@@ -143,3 +143,27 @@
 - [x] Asset alpha calculation
 - [x] Multi-currency portfolio display
 - [x] Historical exchange rate tracking
+
+## Phase 12: Portfolio Analytics Dashboard
+- [x] Install Recharts library
+- [x] Create Analytics page component
+- [x] Asset allocation pie chart
+- [x] Performance over time line chart
+- [x] Sector diversification chart
+- [x] Currency exposure breakdown
+- [x] Drill-down capabilities
+- [x] Interactive tooltips
+- [x] Responsive chart layouts
+- [x] Export chart data functionality
+
+## Phase 13: Automated Daily Price Updates
+- [x] Install node-cron library
+- [x] Create price update service
+- [x] Fetch prices for all holdings
+- [x] Update asset values in database
+- [x] Recalculate net worth
+- [x] Recalculate gains and alpha metrics
+- [x] Schedule cron job for market close
+- [x] Error handling and retry logic
+- [x] Logging for audit trail
+- [x] Manual trigger endpoint for testing

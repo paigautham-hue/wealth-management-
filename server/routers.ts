@@ -300,6 +300,70 @@ export const appRouter = router({
   }),
 
   // ============================================================================
+  // PRICE UPDATER
+  // ============================================================================
+  priceUpdater: router({
+    // Manual trigger for price updates (admin only)
+    triggerUpdate: protectedProcedure.mutation(async () => {
+      const { triggerManualUpdate } = await import("./priceUpdater");
+      return await triggerManualUpdate();
+    }),
+  }),
+
+  // ============================================================================
+  // ANALYTICS
+  // ============================================================================
+  analytics: router({
+    // Get asset allocation
+    getAssetAllocation: protectedProcedure.query(async ({ ctx }) => {
+      const { getAssetAllocation } = await import("./analytics");
+      return await getAssetAllocation(ctx.user.id);
+    }),
+    
+    // Get performance history
+    getPerformanceHistory: protectedProcedure
+      .input(z.object({
+        days: z.number().default(30),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getPerformanceHistory } = await import("./analytics");
+        return await getPerformanceHistory(ctx.user.id, input.days);
+      }),
+    
+    // Get sector allocation
+    getSectorAllocation: protectedProcedure.query(async ({ ctx }) => {
+      const { getSectorAllocation } = await import("./analytics");
+      return await getSectorAllocation(ctx.user.id);
+    }),
+    
+    // Get currency exposure
+    getCurrencyExposure: protectedProcedure.query(async ({ ctx }) => {
+      const { getCurrencyExposure } = await import("./analytics");
+      return await getCurrencyExposure(ctx.user.id);
+    }),
+    
+    // Get top performers
+    getTopPerformers: protectedProcedure
+      .input(z.object({
+        limit: z.number().default(5),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getTopPerformers } = await import("./analytics");
+        return await getTopPerformers(ctx.user.id, input.limit);
+      }),
+    
+    // Get bottom performers
+    getBottomPerformers: protectedProcedure
+      .input(z.object({
+        limit: z.number().default(5),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getBottomPerformers } = await import("./analytics");
+        return await getBottomPerformers(ctx.user.id, input.limit);
+      }),
+  }),
+
+  // ============================================================================
   // FOREX & CURRENCY CONVERSION
   // ============================================================================
   forex: router({

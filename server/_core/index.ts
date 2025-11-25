@@ -59,6 +59,14 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Initialize automated price updates
+    import("../priceUpdater").then(({ scheduleDailyUpdates }) => {
+      scheduleDailyUpdates();
+      console.log("[Server] Automated price updates scheduled");
+    }).catch(err => {
+      console.error("[Server] Failed to schedule price updates:", err);
+    });
   });
 }
 
