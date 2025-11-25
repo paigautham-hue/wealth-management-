@@ -410,6 +410,41 @@ export const appRouter = router({
   }),
 
   // ============================================================================
+  // SENTIMENT & NEWS ANALYSIS
+  // ============================================================================
+  sentiment: router({
+    // Analyze sentiment for a specific stock
+    analyzeStock: protectedProcedure
+      .input(z.object({
+        ticker: z.string(),
+      }))
+      .query(async ({ input }) => {
+        const { analyzeStockSentiment } = await import("./sentimentAnalysis");
+        return await analyzeStockSentiment(input.ticker);
+      }),
+    
+    // Analyze overall market sentiment
+    analyzeMarket: protectedProcedure
+      .input(z.object({
+        market: z.enum(["indian", "us", "global"]),
+      }))
+      .query(async ({ input }) => {
+        const { analyzeMarketSentiment } = await import("./sentimentAnalysis");
+        return await analyzeMarketSentiment(input.market);
+      }),
+    
+    // Monitor portfolio holdings
+    monitorPortfolio: protectedProcedure
+      .input(z.object({
+        tickers: z.array(z.string()),
+      }))
+      .query(async ({ input }) => {
+        const { monitorPortfolioSentiment } = await import("./sentimentAnalysis");
+        return await monitorPortfolioSentiment(input.tickers);
+      }),
+  }),
+
+  // ============================================================================
   // PRICE UPDATER
   // ============================================================================
   priceUpdater: router({

@@ -187,15 +187,16 @@
 - [x] Data validation and checksums across documents
 
 ## Phase 16: Sentiment & News Analysis
-- [ ] Real-time news monitoring (NewsAPI)
-- [ ] Sentiment analysis on holdings
-- [ ] Social media signals (Twitter/Reddit)
-- [ ] Insider trading alerts (SEC filings)
-- [ ] Earnings call transcript summaries
-- [ ] News impact scoring
+- [x] Real-time news monitoring (NewsAPI)
+- [x] Sentiment analysis on holdings
+- [x] Social media signals (Twitter/Reddit)
+- [x] Insider trading alerts (SEC filings)
+- [x] Earnings call transcript summaries
+- [x] News impact scoring
 
 ## Phase 17: Family Office Mode
-- [ ] Hierarchical user roles and permissions
+- [x] Hierarchical user roles and permissions (schema)
+- [x] Family groups table
 - [ ] Consolidated family dashboard
 - [ ] Inheritance planning tools
 - [ ] Trust management system

@@ -15,7 +15,10 @@ export const users = mysqlTable("users", {
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  role: mysqlEnum("role", ["user", "admin", "family_admin", "family_viewer"]).default("user").notNull(),
+  familyId: int("familyId"), // Link to family group
+  profilePicture: text("profilePicture"), // URL to profile image
+  bio: text("bio"), // Short bio
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -23,6 +26,21 @@ export const users = mysqlTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+// ============================================================================
+// FAMILY OFFICE
+// ============================================================================
+
+export const familyGroups = mysqlTable("family_groups", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(), // Family name
+  createdBy: int("createdBy").notNull(), // User ID of creator
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type FamilyGroup = typeof familyGroups.$inferSelect;
+export type InsertFamilyGroup = typeof familyGroups.$inferInsert;
 
 // ============================================================================
 // USER PREFERENCES
