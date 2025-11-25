@@ -410,6 +410,57 @@ export const appRouter = router({
   }),
 
   // ============================================================================
+  // FAMILY OFFICE
+  // ============================================================================
+  family: router({
+    createFamily: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { createFamilyGroup } = await import("./family");
+        return await createFamilyGroup(ctx.user.id, input.name);
+      }),
+    
+    getGroup: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getFamilyGroup } = await import("./family");
+        return await getFamilyGroup(ctx.user.id);
+      }),
+    
+    getMembers: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getFamilyMembers } = await import("./family");
+        return await getFamilyMembers(ctx.user.id);
+      }),
+    
+    getConsolidatedWealth: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getConsolidatedWealth } = await import("./family");
+        return await getConsolidatedWealth(ctx.user.id);
+      }),
+    
+    inviteMember: protectedProcedure
+      .input(z.object({
+        email: z.string().email(),
+        role: z.enum(["family_admin", "family_viewer"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { inviteFamilyMember } = await import("./family");
+        return await inviteFamilyMember(ctx.user.id, input.email, input.role);
+      }),
+    
+    removeMember: protectedProcedure
+      .input(z.object({
+        userId: z.number(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { removeFamilyMember } = await import("./family");
+        return await removeFamilyMember(ctx.user.id, input.userId);
+      }),
+  }),
+
+  // ============================================================================
   // SENTIMENT & NEWS ANALYSIS
   // ============================================================================
   sentiment: router({
