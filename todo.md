@@ -334,3 +334,32 @@
 - [x] Personalized asset allocation recommendations
 - [x] Custom reporting preferences
 - [x] Theme and layout customization
+
+## Phase 29: UI Pages for Advanced Features
+- [x] Liabilities Dashboard page
+- [x] Add liability form
+- [x] Debt payoff projection visualization
+- [x] Debt-to-equity ratio display
+- [x] Tax Optimizer UI page
+- [x] Loss harvesting opportunities table
+- [x] Tax savings calculator
+- [x] Replacement asset suggestions
+- [ ] Alternative Investments Manager page
+- [ ] Add alternative investment form
+- [ ] Liquidity status tracking
+- [ ] Valuation history charts
+- [ ] Insurance Tracker page
+- [ ] Add insurance policy form
+- [ ] Coverage summary dashboard
+- [ ] Premium payment reminders
+- [ ] Risk Analytics Dashboard page
+- [ ] Attribution metrics visualization (Sharpe, Sortino, Alpha, Beta)
+- [ ] Max drawdown chart
+- [ ] Factor attribution breakdown
+- [ ] Scenario Planner page
+- [ ] Monte Carlo simulation results
+- [ ] Confidence interval visualization
+- [ ] Stress test scenarios display
+- [ ] Enhanced Family Office Dashboard
+- [ ] Consolidated metrics with new features
+- [ ] Member performance comparison

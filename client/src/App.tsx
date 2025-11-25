@@ -5,7 +5,9 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import FamilyOffice from "./pages/FamilyOffice";
+import FamilyOffice from "@/pages/FamilyOffice";
+import Liabilities from "@/pages/Liabilities";
+import TaxOptimizer from "@/pages/TaxOptimizer";
 import Portfolio from "./pages/Portfolio";
 import AddAsset from "./pages/AddAsset";
 import LRS from "./pages/LRS";
@@ -18,9 +20,10 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path="/family" component={FamilyOffice} />
-      <Route path="/portfolio" component={Portfolio} />
-      <Route path="/portfolio/add" component={AddAsset} />
+      <Route path="/family-office" component={FamilyOffice} />
+      <Route path="/liabilities" component={Liabilities} />
+      <Route path="/tax-optimizer" component={TaxOptimizer} />
+      <Route path="/portfolio" component={Portfolio} />      <Route path="/portfolio/add" component={AddAsset} />
       <Route path="/lrs" component={LRS} />
       <Route path="/oracle" component={Oracle} />
       <Route path="/documents" component={Documents} />
