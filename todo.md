@@ -352,10 +352,10 @@
 - [ ] Add insurance policy form
 - [ ] Coverage summary dashboard
 - [ ] Premium payment reminders
-- [ ] Risk Analytics Dashboard page
-- [ ] Attribution metrics visualization (Sharpe, Sortino, Alpha, Beta)
-- [ ] Max drawdown chart
-- [ ] Factor attribution breakdown
+- [x] Risk Analytics Dashboard page
+- [x] Attribution metrics visualization (Sharpe, Sortino, Alpha, Beta)
+- [x] Max drawdown chart
+- [x] Factor attribution breakdown
 - [ ] Scenario Planner page
 - [ ] Monte Carlo simulation results
 - [ ] Confidence interval visualization

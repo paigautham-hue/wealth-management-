@@ -97,6 +97,12 @@ export default function Home() {
             <Link href="/wealth-advisor">
               <Button variant="ghost">AI Advisor</Button>
             </Link>
+            <Link href="/liabilities">
+              <Button variant="ghost">Liabilities</Button>
+            </Link>
+            <Link href="/tax-optimizer">
+              <Button variant="ghost">Tax</Button>
+            </Link>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">{user?.name}</span>
             </div>
