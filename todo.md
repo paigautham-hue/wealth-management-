@@ -167,3 +167,108 @@
 - [x] Error handling and retry logic
 - [x] Logging for audit trail
 - [x] Manual trigger endpoint for testing
+
+## Phase 14: AI Wealth Advisor
+- [x] Risk tolerance questionnaire
+- [x] Investment strategy generator (GPT-4o)
+- [x] Market regime detection (ML model)
+- [x] Behavioral finance coach
+- [x] Natural language portfolio rebalancing
+- [x] Personalized allocation recommendations
+- [x] AI conversation interface
+- [x] Strategy backtesting
+
+## Phase 15: AI Document Intelligence
+- [x] Multi-format parser (PDF, Excel, emails)
+- [x] Receipt OCR for luxury purchases
+- [x] Contract analysis
+- [x] Automatic transaction categorization
+- [x] Duplicate detection
+- [x] Data validation and checksums across documents
+
+## Phase 16: Sentiment & News Analysis
+- [ ] Real-time news monitoring (NewsAPI)
+- [ ] Sentiment analysis on holdings
+- [ ] Social media signals (Twitter/Reddit)
+- [ ] Insider trading alerts (SEC filings)
+- [ ] Earnings call transcript summaries
+- [ ] News impact scoring
+
+## Phase 17: Family Office Mode
+- [ ] Hierarchical user roles and permissions
+- [ ] Consolidated family dashboard
+- [ ] Inheritance planning tools
+- [ ] Trust management system
+- [ ] Family constitution documentation
+- [ ] Multi-generational wealth visualization
+- [ ] Secure family messaging
+
+## Phase 18: Alternative Investments
+- [ ] Private equity/VC tracking
+- [ ] Real estate portfolio manager
+- [ ] Art & collectibles catalog
+- [ ] Luxury assets (watches, jewelry, cars)
+- [ ] Cryptocurrency multi-wallet integration
+- [ ] Commodities tracking (gold, silver)
+- [ ] Manual valuation updates
+
+## Phase 19: Fixed Income Advanced
+- [ ] Bond ladder visualization
+- [ ] Duration & convexity calculation
+- [ ] Credit rating monitoring
+- [ ] Callable bond modeling
+- [ ] Yield curve analysis
+- [ ] Interest rate risk metrics
+
+## Phase 20: Insurance as Asset Class
+- [ ] Life insurance tracker
+- [ ] Health insurance management
+- [ ] Property & casualty insurance
+- [ ] Insurance needs analysis (AI)
+- [ ] Coverage gap detection
+- [ ] Claim history tracking
+
+## Phase 21: True Net Worth Calculation
+- [ ] Comprehensive liability tracking
+- [ ] Mortgage manager with amortization
+- [ ] Personal loans tracker
+- [ ] Business debt management
+- [ ] Margin loans with LTV monitoring
+- [ ] Debt payoff optimizer
+- [ ] Assets - Liabilities = Net Worth
+- [ ] Liquid vs illiquid breakdown
+
+## Phase 22: Attribution Analysis
+- [ ] Performance attribution engine
+- [ ] Factor exposure analysis
+- [ ] Benchmark comparison tools
+- [ ] Sharpe ratio calculation
+- [ ] Sortino ratio
+- [ ] Maximum drawdown tracking
+- [ ] Risk-adjusted returns dashboard
+
+## Phase 23: Scenario Analysis & Stress Testing
+- [ ] Monte Carlo simulation engine
+- [ ] What-if analysis tool
+- [ ] Historical stress tests (2008, COVID)
+- [ ] Custom scenario builder
+- [ ] Retirement success probability
+- [ ] Portfolio resilience scoring
+
+## Phase 24: Tax Optimization Suite
+- [ ] Tax loss harvesting detector
+- [ ] Capital gains optimizer (FIFO/LIFO/specific ID)
+- [ ] Tax-efficient withdrawal calculator
+- [ ] Dividend tax tracking (qualified vs ordinary)
+- [ ] India LTCG/STCG calculator
+- [ ] Section 54/54F exemption tracker
+- [ ] Tax report generator
+
+## Phase 25: Personalization
+- [ ] Custom dashboard builder (drag-and-drop)
+- [ ] Saved views system
+- [ ] Theme customization
+- [ ] Multi-language support (Hindi, Gujarati, etc.)
+- [ ] Currency display toggle (INR/USD/EUR)
+- [ ] Widget library
+- [ ] User preferences storage

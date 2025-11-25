@@ -94,6 +94,9 @@ export default function Home() {
             <Link href="/analytics">
               <Button variant="ghost">Analytics</Button>
             </Link>
+            <Link href="/wealth-advisor">
+              <Button variant="ghost">AI Advisor</Button>
+            </Link>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">{user?.name}</span>
             </div>

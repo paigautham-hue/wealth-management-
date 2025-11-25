@@ -11,6 +11,7 @@ import LRS from "./pages/LRS";
 import Oracle from "./pages/Oracle";
 import Documents from "./pages/Documents";
 import Analytics from "./pages/Analytics";
+import WealthAdvisor from "./pages/WealthAdvisor";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/oracle" component={Oracle} />
       <Route path="/documents" component={Documents} />
       <Route path="/analytics" component={Analytics} />
+      <Route path="/wealth-advisor" component={WealthAdvisor} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

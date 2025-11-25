@@ -300,6 +300,116 @@ export const appRouter = router({
   }),
 
   // ============================================================================
+  // WEALTH ADVISOR
+  // ============================================================================
+  wealthAdvisor: router({
+    // Generate personalized investment strategy
+    generateStrategy: protectedProcedure
+      .input(z.object({
+        riskTolerance: z.enum(["conservative", "moderate", "aggressive"]),
+        age: z.number(),
+        investmentHorizon: z.number(),
+        liquidityNeeds: z.enum(["low", "medium", "high"]),
+        investmentGoals: z.array(z.string()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { generateInvestmentStrategy } = await import("./wealthAdvisor");
+        return await generateInvestmentStrategy(ctx.user.id, input);
+      }),
+    
+    // Detect current market regime
+    detectRegime: protectedProcedure.mutation(async () => {
+      const { detectMarketRegime } = await import("./wealthAdvisor");
+      return await detectMarketRegime();
+    }),
+    
+    // Analyze behavioral patterns
+    analyzeBehavior: protectedProcedure.mutation(async ({ ctx }) => {
+      const { analyzeBehavioralPatterns } = await import("./wealthAdvisor");
+      return await analyzeBehavioralPatterns(ctx.user.id);
+    }),
+    
+    // Process natural language rebalancing command
+    processRebalancing: protectedProcedure
+      .input(z.object({
+        command: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { processRebalancingCommand } = await import("./wealthAdvisor");
+        return await processRebalancingCommand(ctx.user.id, input.command);
+      }),
+  }),
+
+  // ============================================================================
+  // DOCUMENT INTELLIGENCE
+  // ============================================================================
+  documentIntelligence: router({
+    // Parse Excel file
+    parseExcel: protectedProcedure
+      .input(z.object({
+        fileUrl: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const response = await fetch(input.fileUrl);
+        const buffer = Buffer.from(await response.arrayBuffer());
+        const { parseExcelFile } = await import("./documentIntelligence");
+        return await parseExcelFile(buffer);
+      }),
+    
+    // Parse email
+    parseEmail: protectedProcedure
+      .input(z.object({
+        emailContent: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { parseEmail } = await import("./documentIntelligence");
+        return await parseEmail(input.emailContent);
+      }),
+    
+    // Parse Word document
+    parseWord: protectedProcedure
+      .input(z.object({
+        fileUrl: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const response = await fetch(input.fileUrl);
+        const buffer = Buffer.from(await response.arrayBuffer());
+        const { parseWordDocument } = await import("./documentIntelligence");
+        return await parseWordDocument(buffer);
+      }),
+    
+    // Parse receipt (OCR)
+    parseReceipt: protectedProcedure
+      .input(z.object({
+        imageUrl: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { parseReceipt } = await import("./documentIntelligence");
+        return await parseReceipt(input.imageUrl);
+      }),
+    
+    // Categorize transactions
+    categorizeTransactions: protectedProcedure
+      .input(z.object({
+        transactions: z.array(z.object({
+          date: z.string(),
+          description: z.string(),
+          amount: z.number(),
+          type: z.enum(["buy", "sell", "dividend", "interest"]),
+          ticker: z.string().optional(),
+          quantity: z.number().optional(),
+          price: z.number().optional(),
+          fees: z.number().optional(),
+          confidence: z.number(),
+        })),
+      }))
+      .mutation(async ({ input }) => {
+        const { categorizeTransactions } = await import("./documentIntelligence");
+        return await categorizeTransactions(input.transactions);
+      }),
+  }),
+
+  // ============================================================================
   // PRICE UPDATER
   // ============================================================================
   priceUpdater: router({
