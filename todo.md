@@ -390,4 +390,5 @@
 ## Phase 32: Fix Vite HMR WebSocket Error
 - [x] Update Vite config to use proxied domain for HMR
 - [x] Configure WebSocket connection settings (wss protocol, port 443)
+- [x] Add full hostname to HMR configuration
 - [x] Test HMR connection in browser
