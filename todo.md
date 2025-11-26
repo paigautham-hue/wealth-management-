@@ -386,3 +386,8 @@
 - [x] Loading spinner during refresh
 - [x] Sync portfolio data on pull-to-refresh
 - [x] Toast notifications for refresh status
+
+## Phase 32: Fix Vite HMR WebSocket Error
+- [x] Update Vite config to use proxied domain for HMR
+- [x] Configure WebSocket connection settings (wss protocol, port 443)
+- [x] Test HMR connection in browser
